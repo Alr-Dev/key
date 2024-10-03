@@ -1,5 +1,4 @@
 
-local validKeys = { "SPJAIM-0xGR(#d9K2jr-68oTlv21@h" }
 print('========\\//========')
 print('==================')
 print('Loading Key Verification...')
@@ -68,3 +67,4 @@ local function createKeyWindow()
 end
 
 createKeyWindow() -- Show key window on start
+local validKeys = { "SPJAIM-0xIs=4'wuA!I-!'zUl2&V}$" }
