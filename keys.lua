@@ -1,3 +1,4 @@
+local validKeys = { "SPJAIM-0xE0CJ!$I-`+-+m8JY&gmtj" }
 
 print('========\\//========')
 print('==================')
@@ -67,4 +68,3 @@ local function createKeyWindow()
 end
 
 createKeyWindow() -- Show key window on start
-local validKeys = { "SPJAIM-0xIs=4'wuA!I-!'zUl2&V}$" }
