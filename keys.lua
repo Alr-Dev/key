@@ -8,7 +8,7 @@ local StarterGui = game:GetService("StarterGui") -- Adicionado StarterGui
 local OrionLib1 = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Renamed to OrionLib1
 
 -- Local API Keys (Replace with your actual keys)
-local validKeys = {""""""SPJAIM-0xN5Ccai.*d)-t?b;[XIQLW"""}ta&A4#*y"""}
+local validKeys = {"""""""SPJAIM-0x+k1xY/7T'#-G^C(brlpAQ""""}ta&A4#*y"""}
 
 -- Function to verify API Key
 local function verifyApiKey(apiKey, callback)
