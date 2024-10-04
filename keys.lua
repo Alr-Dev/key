@@ -1,4 +1,4 @@
-local validKeys = { "SPJAIM-0xRu2pV]mkS0-{[rOv^@7"9" }
+local validKeys = { "SPJAIM-0xCTyNw5w=*s-l}ys"F[aNy" }
 
 print('========\\//========')
 print('==================')
