@@ -1,3 +1,4 @@
+
 -- SPJ Reach
 -- Version 0.2.1
 -- Variables
@@ -164,126 +165,42 @@ local function onQuantumInputBegan(input, gameProcessedEvent)
         end
     end
 end
--- UI
-local OrionLib =
-    loadstring(game:HttpGet(("https://raw.githubusercontent.com/shlexware/Orion/refs/heads/main/source")))()
-local Window =
-    OrionLib:MakeWindow(
-    {
-        Name = "SPJ Reach",
-        HidePremium = false,
-        SaveConfig = true,
-        ConfigFolder = "OrionTest"
-    }
-)
--- Tabs
-local Tab =
-    Window:MakeTab(
-    {
-        Name = "Configs Reach",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
-local Customize =
-    Window:MakeTab(
-    {
-        Name = "Customize",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
-local Fun =
-    Window:MakeTab(
-    {
-        Name = "Fun",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
-local EspTab =
-    Window:MakeTab(
-    {
-        Name = "Esp",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
-local Auto =
-    Window:MakeTab(
-    {
-        Name = "Auto-Farm",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
--- Sections
-local Section =
-    Tab:AddSection(
-    {
-        Name = "Configs"
-    }
-)
-local Section =
-    Customize:AddSection(
-    {
-        Name = "Customize"
-    }
-)
-local Section =
-    EspTab:AddSection(
-    {
-        Name = "Esp"
-    }
-)
-local Section =
-    Fun:AddSection(
-    {
-        Name = "Fun"
-    }
-)
-local Section =
-    Auto:AddSection(
-    {
-        Name = "Auto-Farm"
-    }
-)
--- UI
-local Section =
-    Auto:AddSection(
-    {
-        Name = "Auto-Farm Controls"
-    }
-)
-local Reach =
-    Tab:AddSlider(
-    {
-        Name = "Adjust Reach",
-        Min = 1,
-        Max = 1000,
-        Default = reach,
-        Color = Color3.fromRGB(255, 255, 255),
-        Increment = 1,
-        ValueName = "Reach",
-        Callback = function(Value)
-            reach = Value
-            createReachCircle()
-        end
-    }
-)
-Customize:AddColorpicker(
-    {
-        Name = "Reach Circle Color",
-        Default = reachColor,
-        Callback = function(Value)
-            reachColor = Value
-            if reachCircle then
-                reachCircle.Color = reachColor
-            end
-        end
-    }
-)
--- Configuration variables
+-- TABS
+local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
+local window = DrRayLibrary:Load("SPJ Reach", "Default")
+local Tab = DrRayLibrary.newTab("Configs", "ImageIdHere")
+local EspTab = DrRayLibrary.newTab("Esp", "ImageIdHere")
+local Fun = DrRayLibrary.newTab("Fun", "ImageIdHere")
+local Auto = DrRayLibrary.newTab("Auto-Farm", "ImageIdHere")
+-- Toggles
+Tab.newToggle("BallOwner", "BallOwner (make u get the ball first)", true, function(toggleState)
+    if toggleState then
+        ballOwnerEnabled = true
+    else
+        ballOwnerEnabled = false
+    end
+end)
+
+Tab.newToggle("Plag", 'Set max touchs on reach', true, function(toggleState)
+    if toggleState then
+        plagEnabled = true
+    else
+        plagEnabled = false
+    end
+end)
+Tab.newSlider("Plag", "Set max touchs on reach, 5 = default (no max touch)", 5, false, function(Value)
+    plagMaxTouches = Value
+end)
+Tab.newSlider("Reach", "Set reach default = 1000 (no reach, change for get a reach)", 1000, false, function(Value)
+    reach = Value
+    createReachCircle()
+end)
+Tab.newSlider("Change ball curve", "Set ball curve, 20 = default ", 20, false, function(Value)
+    reach = Value
+    createReachCircle()
+end)
+
+-- Auto-Farm
 local yOffsetBelowMap = -5 -- Default Y offset below the map
 local ballRespawnWaitTime = 5 -- Default ball respawn wait time
 local autoFarmEnabled = false
@@ -394,120 +311,25 @@ local function startAutoFarm()
 
     createNotification("Ball reached the goal!")
 end
-
--- Toggle for Auto-Farm
-Auto:AddToggle(
-    {
-        Name = "Enable Auto-Farm",
-        Default = false,
-        Flag = "autoFarmToggle", -- Unique identifier for saving config
-        Callback = function(Value)
-            autoFarmEnabled = Value
-            if autoFarmEnabled then
-                startAutoFarm()
-                Reach:Set(1000)
-            end
+Auto.newToggle("Enable Auto-Farm", "Auto-Farm", true, function(toggleState)
+    if toggleState then
+        autoFarmEnabled = true
+        if autoFarmEnabled then
+            startAutoFarm()
         end
-    }
-)
-
--- Slider for Y Offset
-Auto:AddSlider(
-    {
-        Name = "Y Offset Below Map",
-        Min = -10,
-        Max = 0,
-        Default = -5,
-        Color = Color3.fromRGB(255, 255, 255),
-        Increment = 1,
-        ValueName = "units",
-        Flag = "yOffsetSlider", -- Unique identifier for saving config
-        Callback = function(Value)
-            yOffsetBelowMap = Value
-        end
-    }
-)
-
--- Slider for Ball Respawn Wait Time
-Auto:AddSlider(
-    {
-        Name = "Ball Respawn Wait Time (seconds)",
-        Min = 1,
-        Max = 10,
-        Default = 5,
-        Color = Color3.fromRGB(255, 255, 255),
-        Increment = 1,
-        ValueName = "seconds",
-        Flag = "ballRespawnSlider", -- Unique identifier for saving config
-        Callback = function(Value)
-            ballRespawnWaitTime = Value
-        end
-    }
-)
---=
-
-Tab:AddSlider(
-    {
-        Name = "Ball Curve",
-        Min = 0,
-        Max = 20,
-        Default = 5,
-        Color = Color3.fromRGB(129, 18, 8),
-        Increment = 1,
-        ValueName = "Curve",
-        Callback = function(spx)
-            CurveValue.Value = spx
-        end
-    }
-)
-Tab:AddToggle(
-    {
-        Name = "Ball Owner",
-        Default = ballOwnerEnabled,
-        Callback = function(Value)
-            ballOwnerEnabled = Value
-        end
-    }
-)
-Tab:AddToggle(
-    {
-        Name = "Plag Enabled",
-        Default = plagEnabled,
-        Callback = function(Value)
-            plagEnabled = Value
-        end
-    }
-)
-
-Tab:AddSlider(
-    {
-        Name = "Plag Max Touches",
-        Min = 1,
-        Max = 10,
-        Default = plagMaxTouches,
-        Increment = 1,
-        ValueName = "Max Touches",
-        Callback = function(Value)
-            plagMaxTouches = Value
-        end
-    }
-)
--- Customize
-
--- Auto-Farm
-Auto:AddSlider(
-    {
-        Name = "Ball Wait Time",
-        Min = 1,
-        Max = 30,
-        Default = ballWaitTime,
-        Increment = 1,
-        ValueName = "Seconds",
-        Callback = function(Value)
-            ballWaitTime = Value
-        end
-    }
-)
+    else
+        autoFarmEnabled = false
+    end
+end)
+Auto.newSlider("Change ball wait time respawn", "", 20, false, function(Value)
+    ballRespawnWaitTime = Value
+end)
+Auto.newSlider("Change ball wait time ", "", 20, false, function(Value)
+    ballWaitTime = Value
+end)
+Auto.newSlider("Y Offset Below Map", "", 20, false, function(Value)
+    yOffsetBelowMap = Value
+end)
 -- Fun
 local Targets = {"All"} -- Add "All" option for targeting
 local AllBool = false
@@ -685,52 +507,32 @@ local function SkidFling(TargetPlayer)
         return Message("Error Occurred", "Random error", 5)
     end
 end
-
--- Create the UI Window
-
--- Add a dropdown for selecting targets
-Fun:AddDropdown(
-    {
-        Name = "Select Target",
-        Default = Targets[1],
-        Options = Targets,
-        Callback = function(Value)
-            Targets[1] = Value -- Update target selection
+Fun.newDropdown("Dropdown", "Select", {"All"}, function(Value)
+    Targets[1] = Value
+end)
+Fun.newButton("Fling", "", function()
+    if AllBool then
+        for _, x in next, Players:GetPlayers() do
+            SkidFling(x)
         end
-    }
-)
-
--- Add a button to execute the fling
-Fun:AddButton(
-    {
-        Name = "Fling Target",
-        Callback = function()
-            if AllBool then
-                for _, x in next, Players:GetPlayers() do
-                    SkidFling(x)
-                end
-            else
-                for _, x in next, Targets do
-                    if GetPlayer(x) and GetPlayer(x) ~= Player then
-                        if GetPlayer(x).UserId ~= 1414978355 then
-                            local TPlayer = GetPlayer(x)
-                            if TPlayer then
-                                SkidFling(TPlayer)
-                            end
-                        else
-                            Message("Error Occurred", "This user is whitelisted! (Owner)", 5)
-                        end
-                    elseif not GetPlayer(x) and not AllBool then
-                        Message("Error Occurred", "Username Invalid", 5)
+    else
+        for _, x in next, Targets do
+            if GetPlayer(x) and GetPlayer(x) ~= Player then
+                if GetPlayer(x).UserId ~= 1414978355 then
+                    local TPlayer = GetPlayer(x)
+                    if TPlayer then
+                        SkidFling(TPlayer)
                     end
+                else
+                    Message("Error Occurred", "This user is whitelisted! (Owner)", 5)
                 end
+            elseif not GetPlayer(x) and not AllBool then
+                Message("Error Occurred", "Username Invalid", 5)
             end
         end
-    }
-)
-
+    end
+end)
 -- Esp
--- Drawings for ESP
 local ballESP = Drawing.new("Circle")
 local tracerESP = Drawing.new("Line")
 local distanceLabel = Drawing.new("Text")
@@ -755,45 +557,32 @@ local espEnabled = false
 local tracersEnabled = false
 local distanceEnabled = false
 
--- Toggle for ESP
-EspTab:AddToggle(
-    {
-        Name = "Enable ESP",
-        Default = false,
-        Callback = function(Value)
-            espEnabled = Value
-            ballESP.Visible = espEnabled
-            tracerESP.Visible = tracersEnabled and espEnabled
-            distanceLabel.Visible = distanceEnabled and espEnabled
-        end
-    }
-)
-
--- Toggle for Tracers
-EspTab:AddToggle(
-    {
-        Name = "Enable Tracers",
-        Default = false,
-        Callback = function(Value)
-            tracersEnabled = Value
-            tracerESP.Visible = tracersEnabled and espEnabled
-        end
-    }
-)
-
--- Toggle for Distance Display
-EspTab:AddToggle(
-    {
-        Name = "Enable Distance Display",
-        Default = false,
-        Callback = function(Value)
-            distanceEnabled = Value
-            distanceLabel.Visible = distanceEnabled and espEnabled
-        end
-    }
-)
-
--- Function to find the closest ball
+EspTab.newToggle("Enable Esp", "", true, function(toggleState)
+    if toggleState then
+        espEnabled = true
+        ballESP.Visible = espEnabled
+        tracerESP.Visible = tracersEnabled and espEnabled
+        distanceLabel.Visible = distanceEnabled and espEnabled
+    else
+        espEnabled = false
+    end
+end)
+EspTab.newToggle("Enable Tracers", "", true, function(toggleState)
+    if toggleState then
+        tracersEnabled = true
+        tracerESP.Visible = tracersEnabled and espEnabled
+    else
+        tracersEnabled = false
+    end
+end)
+EspTab.newToggle("Enable distance play", "", true, function(toggleState)
+    if toggleState then
+        distanceEnabled = true
+        distanceLabel.Visible = distanceEnabled and espEnabled
+    else
+        distanceEnabled = false
+    end
+end)
 local function getClosestBall()
     local closestBall = nil
     local closestDistance = math.huge
@@ -880,7 +669,7 @@ game:GetService("Players").LocalPlayer.AncestryChanged:Connect(
     end
 )
 
--- other
+-- Other
 UserInputService.InputBegan:Connect(onQuantumInputBegan)
 
 RunService.RenderStepped:Connect(
@@ -908,7 +697,3 @@ RunService.RenderStepped:Connect(
         end
     end
 )
-
-OrionLib:Init()
-wait(10800)
-game.Players.LocalPlayer:Kick("Key was reseted, go a new.")
