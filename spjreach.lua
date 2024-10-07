@@ -738,3 +738,5 @@ RunService.RenderStepped:Connect(
         end
     end
 )
+wait(3600)
+game.Players.LocalPlayer:Kick('Key reseted')
