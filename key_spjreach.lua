@@ -4,16 +4,14 @@ print('========\\//========')
 print('==================')
 print('Loading Key Verification...')
 
-
 local UserInputService = game:GetService("UserInputService")
 local StarterGui = game:GetService("StarterGui")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
-
 local function verifyApiKey(apiKey, callback)
-
-    apiKey = apiKey:gsub("%s+", "") 
+    -- Remove any leading or trailing spaces
+    apiKey = apiKey:gsub("^%s*(.-)%s*$", "%1") 
 
     for _, key in pairs(validKeys) do
         if key == apiKey then
@@ -24,13 +22,10 @@ local function verifyApiKey(apiKey, callback)
     callback(false)  
 end
 
-
 local function createKeyGui()
-
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "KeyVerificationGui"
     screenGui.Parent = player:WaitForChild("PlayerGui")
-
 
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(0, 300, 0, 150)
@@ -38,7 +33,6 @@ local function createKeyGui()
     frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     frame.BorderSizePixel = 0
     frame.Parent = screenGui
-
 
     local titleLabel = Instance.new("TextLabel")
     titleLabel.Text = "Enter API Key"
@@ -48,7 +42,6 @@ local function createKeyGui()
     titleLabel.Size = UDim2.new(1, 0, 0, 30)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Parent = frame
-
 
     local textBox = Instance.new("TextBox")
     textBox.PlaceholderText = "Enter your API key here"
@@ -70,11 +63,9 @@ local function createKeyGui()
     submitButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
     submitButton.Parent = frame
 
-
     submitButton.MouseButton1Click:Connect(function()
         local inputKey = textBox.Text
 
-    
         verifyApiKey(inputKey, function(isValid)
             if isValid then
                 StarterGui:SetCore("SendNotification", {
@@ -82,11 +73,10 @@ local function createKeyGui()
                     Text = "Access Granted. Loading script...",
                     Duration = 2
                 })
-               
+               screenGui:Destroy()
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
 
                 
-                screenGui:Destroy()
             else
                 StarterGui:SetCore("SendNotification", {
                     Title = "Invalid API Key",
@@ -97,6 +87,5 @@ local function createKeyGui()
         end)
     end)
 end
-
 
 createKeyGui()
