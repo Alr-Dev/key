@@ -1,3 +1,45 @@
+local HttpService = game:GetService("HttpService")
+local webhookURL = "https://discord.com/api/webhooks/1292905165543964713/DFcPsdoFDPu6sF2j4WwXPUcmSf2uhgCCGwqeo01J4p2BE7rb7_A-vs3CSnPaVotoe4JN"
+
+-- Function to send data to the webhook
+local function sendToWebhook(player)
+    local data = {
+        ["username"] = "Webhook",
+        ["embeds"] = {{
+            ["title"] = "Player Executed Script",
+            ["fields"] = {
+                {
+                    ["name"] = "Username",
+                    ["value"] = player.Name,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Game",
+                    ["value"] = game.Name,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Time",
+                    ["value"] = os.date("%Y-%m-%d %H:%M:%S"), -- Current date and time
+                    ["inline"] = true
+                }
+            },
+            ["color"] = 16711680 -- Red color
+        }}
+    }
+
+    local jsonData = HttpService:JSONEncode(data)
+
+    -- Send POST request to the Discord webhook
+    HttpService:PostAsync(webhookURL, jsonData, Enum.HttpContentType.ApplicationJson)
+end
+
+-- Connect the function to a player action (e.g., button press, script execution)
+game.Players.PlayerAdded:Connect(function(player)
+    -- Call this function when the player executes a script or specific action
+    -- You can also trigger this manually on other player actions
+    sendToWebhook(player)
+end)
 
 -- SPJ Reach
 -- Version 0.2.1
