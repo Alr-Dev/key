@@ -4,14 +4,13 @@ print('========\\//========')
 print('==================')
 print('Loading Key Verification...')
 
--- SPJ Services
+
 local UserInputService = game:GetService("UserInputService")
-local StarterGui = game:GetService("StarterGui") -- Adicionado StarterGui
-local OrionLib1 = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Renamed to OrionLib1
+local StarterGui = game:GetService("StarterGui")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 
--- Local API Keys (Replace with your actual keys)
 
--- Function to verify API Key
 local function verifyApiKey(apiKey, callback)
     for _, key in pairs(validKeys) do
         if key == apiKey then
@@ -22,49 +21,79 @@ local function verifyApiKey(apiKey, callback)
     callback(false)
 end
 
--- Create Key Input Window
-local function createKeyWindow()
-    local Window13 = OrionLib1:MakeWindow({
-        Name = "API KEY",
-        HidePremium = false,
-        SaveConfig = false,
-        ConfigFolder = "OrionTest",
-        IntroEnabled = true,  -- Habilita a introdução
-        IntroText = "Welcome to API Key Verification!",  -- Texto da introdução
-        IntroIcon = "rbxassetid://4483345998"  -- Ícone da introdução (substitua com o ID correto se necessário)
-    })
 
-    local Tab = Window13:MakeTab({
-        Name = "Key Input",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    })
+local function createKeyGui()
 
-    Tab:AddTextbox({
-        Name = "Enter API Key",
-        Default = "",
-        TextDisappear = true,
-        Callback = function(apiKey)
-            verifyApiKey(apiKey, function(isValid)
-                if isValid then
-                    StarterGui:SetCore("SendNotification", {
-                        Title = "API Key Valid",
-                        Text = "Access Granted. Loading script...",
-                        Duration = 2
-                    })
-                    OrionLib1:Destroy()
-                    loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "KeyVerificationGui"
+    screenGui.Parent = player:WaitForChild("PlayerGui")
 
-                else
-                    StarterGui:SetCore("SendNotification", {
-                        Title = "404 error: API Key Invalid",
-                        Text = "Invalid API Key. Please try again.",
-                        Duration = 2
-                    })
-                end
-            end)
-        end
-    })
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 300, 0, 150)
+    frame.Position = UDim2.new(0.5, -150, 0.5, -75)
+    frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    frame.BorderSizePixel = 0
+    frame.Parent = screenGui
+
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Text = "Enter API Key"
+    titleLabel.Font = Enum.Font.SourceSansBold
+    titleLabel.TextSize = 20
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Size = UDim2.new(1, 0, 0, 30)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Parent = frame
+
+
+    local textBox = Instance.new("TextBox")
+    textBox.PlaceholderText = "Enter your API key here"
+    textBox.Font = Enum.Font.SourceSans
+    textBox.TextSize = 18
+    textBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+    textBox.Size = UDim2.new(1, -20, 0, 40)
+    textBox.Position = UDim2.new(0, 10, 0, 40)
+    textBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    textBox.Parent = frame
+
+
+    local submitButton = Instance.new("TextButton")
+    submitButton.Text = "Submit"
+    submitButton.Font = Enum.Font.SourceSansBold
+    submitButton.TextSize = 18
+    submitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    submitButton.Size = UDim2.new(0, 100, 0, 40)
+    submitButton.Position = UDim2.new(0.5, -50, 0, 90)
+    submitButton.BackgroundColor3 = Color3.fromRGB(70, 130, 180)
+    submitButton.Parent = frame
+
+
+    submitButton.MouseButton1Click:Connect(function()
+        local inputKey = textBox.Text
+
+
+        verifyApiKey(inputKey, function(isValid)
+            if isValid then
+                StarterGui:SetCore("SendNotification", {
+                    Title = "API Key Valid",
+                    Text = "Access Granted. Loading script...",
+                    Duration = 2
+                })
+                
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
+                
+               
+                screenGui:Destroy()
+            else
+                StarterGui:SetCore("SendNotification", {
+                    Title = "Invalid API Key",
+                    Text = "Please try again.",
+                    Duration = 2
+                })
+            end
+        end)
+    end)
 end
 
-createKeyWindow() -- Show key window on start
+
+createKeyGui()
