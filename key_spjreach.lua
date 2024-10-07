@@ -53,7 +53,7 @@ local function createKeyWindow()
                         Duration = 2
                     })
                     OrionLib1:Destroy()
-                    loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/SPJ-AIM/refs/heads/main/versions/main.lua", true))()
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
 
                 else
                     StarterGui:SetCore("SendNotification", {
