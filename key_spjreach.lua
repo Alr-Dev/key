@@ -1,4 +1,4 @@
-local validKeys = { "SPJREACH-0xy[{_apW5*)R@Fg'.>W*t" }
+local validKeys = { "SPJREACH-0xy[{_apW5*)R@Fg'.>W*t" } 
 
 print('========\\//========')
 print('==================')
@@ -12,13 +12,16 @@ local player = Players.LocalPlayer
 
 
 local function verifyApiKey(apiKey, callback)
+
+    apiKey = apiKey:gsub("%s+", "") 
+
     for _, key in pairs(validKeys) do
         if key == apiKey then
-            callback(true)
+            callback(true)  
             return
         end
     end
-    callback(false)
+    callback(false)  
 end
 
 
@@ -35,6 +38,7 @@ local function createKeyGui()
     frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     frame.BorderSizePixel = 0
     frame.Parent = screenGui
+
 
     local titleLabel = Instance.new("TextLabel")
     titleLabel.Text = "Enter API Key"
@@ -56,7 +60,6 @@ local function createKeyGui()
     textBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     textBox.Parent = frame
 
-
     local submitButton = Instance.new("TextButton")
     submitButton.Text = "Submit"
     submitButton.Font = Enum.Font.SourceSansBold
@@ -71,7 +74,7 @@ local function createKeyGui()
     submitButton.MouseButton1Click:Connect(function()
         local inputKey = textBox.Text
 
-
+    
         verifyApiKey(inputKey, function(isValid)
             if isValid then
                 StarterGui:SetCore("SendNotification", {
@@ -79,10 +82,10 @@ local function createKeyGui()
                     Text = "Access Granted. Loading script...",
                     Duration = 2
                 })
-                
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
-                
                
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Alr-Dev/key/refs/heads/main/spjreach.lua", true))()
+
+                
                 screenGui:Destroy()
             else
                 StarterGui:SetCore("SendNotification", {
