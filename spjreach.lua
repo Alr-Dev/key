@@ -238,8 +238,7 @@ Tab.newSlider("Reach", "Set reach default = 1000 (no reach, change for get a rea
     createReachCircle()
 end)
 Tab.newSlider("Change ball curve", "Set ball curve, 20 = default ", 20, false, function(Value)
-    reach = Value
-    createReachCircle()
+        CurveValue.Value = Value
 end)
 
 -- Auto-Farm
