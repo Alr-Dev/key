@@ -1,4 +1,4 @@
-local validKeys = { "SPJ-REACH-0xZNEYTE-700JDZ-R6Y6VI" }
+local validKeys = { "SPJ-REACH-0xL9UMTB-XIOGTF-ROSKDC" }
 
 print('========\\//========')
 print('==================')
