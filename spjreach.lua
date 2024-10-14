@@ -1,37 +1,19 @@
 game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
 wait(3)
-    local Filters = {
-    '░██████╗██████╗░░░░░░██╗  ░█████╗░██╗███╗░░░███╗', -- ASCII art needs color red.
-    '██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██║████╗░████║',
-    '╚█████╗░██████╔╝░░░░░██║  ███████║██║██╔████╔██║',
-    '░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██║██║██║╚██╔╝██║',
-    '██████╔╝██║░░░░░╚█████╔╝  ██║░░██║██║██║░╚═╝░██║',
-    '╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝',
-    'Getting Latest version',
-	'Updating',
-    'Setting Functions',
-    'Setting variables',
-    'Setting UI elements',
-    'Finished',
-     'New update avaiable!',
-    '1.3.9',
-    'Loading modules', -- Color orange
-    'Fetching drawing API', -- Color orange
-    'Loading scripts', -- Color orange
-    'Getting cursor lock API', -- Color orange
-    'Loading functions', -- Color orange
-    'Getting Latest version', -- Color orange
-    'Up to date', -- Color yellow
-    'Starting', -- Color green
-    'Script loaded', -- Color green
-    'Info', -- Color yellow
-    'Instances', -- Color yellow
-    'Variables', -- Color yellow
-    'ModuleScripts', -- Color yellow
-    'Functions', -- Color yellow
-    'UI elements', -- Color yellow
-    'Closing in', -- Color yellow
-};
+local Filters = {
+    '░██████╗██████╗░░░░░░██╗  ██████╗░███████╗░█████╗░░█████╗░██╗░░██╗',
+    '██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║░░██║',
+    '╚█████╗░██████╔╝░░░░░██║  ██████╔╝█████╗░░███████║██║░░╚═╝███████║',
+    '░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██╗██╔══╝░░██╔══██║██║░░██╗██╔══██║',
+    '██████╔╝██║░░░░░╚█████╔╝  ██║░░██║███████╗██║░░██║╚█████╔╝██║░░██║',
+    '╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝',
+    'version 0.2.2 was loaded successfully',
+	'Loading..',
+	'Loaded!',
+         'Fetching key..',
+ 'Fetched!',
+	'Thank you for using SPJ Reach!'-- New addition for red color
+}
 
 local CoreGui = game:GetService('CoreGui')
 local DevConsoleUI = CoreGui.DevConsoleMaster.DevConsoleWindow.DevConsoleUI
@@ -52,36 +34,31 @@ DevConsoleUI.DescendantAdded:Connect(function(ins)
         if #Found ~= 0 then
             ins.RichText = true
             for i = 1, #Found do
-                local color = "#e8f31d" -- Default color (yellow)
-                if string.find(Found[i], '░██████╗██████╗░░░░░░██╗') or string.find(Found[i], '██╔════╝██╔══██╗░░░░░██║') or string.find(Found[i], '╚█████╗░██████╔╝░░░░░██║') or string.find(Found[i], '░╚═══██╗██╔═══╝░██╗░░██║') or string.find(Found[i], '██████╔╝██║░░░░░╚█████╔╝') or string.find(Found[i], '╚═════╝░╚═╝░░░░░░╚════╝░') then
-                    color = "#ff0000" -- Red for ASCII art
-                elseif string.find(Found[i], 'Loading modules') or string.find(Found[i], 'Fetching drawing API') or string.find(Found[i], 'Loading scripts') or string.find(Found[i], 'Getting cursor lock API') or string.find(Found[i], 'Loading functions') then
-                    color = "#ffa500" -- Orange for loading messages
-                elseif string.find(Found[i], 'Starting') or string.find(Found[i], 'Script loaded') or string.find(Found[i], '1.3.9') or string.find(Found[i], 'Updating') or string.find(Found[i], 'Finished') or string.find(Found[i], 'New update avaiable!') or string.find(Found[i], 'Getting Latest version') or string.find(Found[i], 'New update avaiable!') or string.find(Found[i], 'Setting Functions') or string.find(Found[i], 'Setting Variables') or string.find(Found[i], 'Setting UI elements') then
-                    color = "#00ff00" -- Green for starting messages
-                end
+                local color = "#ff0000" -- Red for ASCII art and version message
                 ins.Text = string.gsub(ins.Text, Found[i], '<font color="'..color..'">'..Found[i]..'</font>')
             end
         end
     end
 end)
-print('░██████╗██████╗░░░░░░██╗  ░█████╗░██╗███╗░░░███╗')
-print('██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██║████╗░████║')
-print('╚█████╗░██████╔╝░░░░░██║  ███████║██║██╔████╔██║')
-print('░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██║██║██║╚██╔╝██║')
-print('██████╔╝██║░░░░░╚█████╔╝  ██║░░██║██║██║░╚═╝░██║')
-print('╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝')
-print('​version​ 0.2.2')
-warn('[-] Loading modules..')
+
+print('░██████╗██████╗░░░░░░██╗  ██████╗░███████╗░█████╗░░█████╗░██╗░░██╗')
+print('██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██╔════╝██╔══██╗██╔══██╗██║░░██║')
+print('╚█████╗░██████╔╝░░░░░██║  ██████╔╝█████╗░░███████║██║░░╚═╝███████║')
+print('░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██╗██╔══╝░░██╔══██║██║░░██╗██╔══██║')
+print('██████╔╝██║░░░░░╚█████╔╝  ██║░░██║███████╗██║░░██║╚█████╔╝██║░░██║')
+print('╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝')
+print('Loading..')
+wait(2)
+print('Loaded!')
+wait(2)
+print('Fetching key..')
+wait(2)
+print('Fetched key!')
 wait(1)
-warn('[-] Loading scripts..')
-wait(1)
-warn('[-] Loading functions..')
-wait(1)
-warn('[-] Up to date..')
-wait(1)
-warn('[-] Started')
-wait(1)
+print('version 0.2.2 was loaded successfully')
+wait(2)
+local playername = game.Players.LocalPlayer.Name 
+print('Thank you for using SPJ Reach, ' .. playername) 
 game:GetService("StarterGui"):SetCore("DevConsoleVisible", false)
 -- SPJ Reach
 -- Version 0.2.2
