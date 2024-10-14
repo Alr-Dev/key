@@ -1,7 +1,90 @@
+game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
+wait(3)
+    local Filters = {
+    '░██████╗██████╗░░░░░░██╗  ░█████╗░██╗███╗░░░███╗', -- ASCII art needs color red.
+    '██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██║████╗░████║',
+    '╚█████╗░██████╔╝░░░░░██║  ███████║██║██╔████╔██║',
+    '░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██║██║██║╚██╔╝██║',
+    '██████╔╝██║░░░░░╚█████╔╝  ██║░░██║██║██║░╚═╝░██║',
+    '╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝',
+    'Getting Latest version',
+	'Updating',
+    'Setting Functions',
+    'Setting variables',
+    'Setting UI elements',
+    'Finished',
+     'New update avaiable!',
+    '1.3.9',
+    'Loading modules', -- Color orange
+    'Fetching drawing API', -- Color orange
+    'Loading scripts', -- Color orange
+    'Getting cursor lock API', -- Color orange
+    'Loading functions', -- Color orange
+    'Getting Latest version', -- Color orange
+    'Up to date', -- Color yellow
+    'Starting', -- Color green
+    'Script loaded', -- Color green
+    'Info', -- Color yellow
+    'Instances', -- Color yellow
+    'Variables', -- Color yellow
+    'ModuleScripts', -- Color yellow
+    'Functions', -- Color yellow
+    'UI elements', -- Color yellow
+    'Closing in', -- Color yellow
+};
 
+local CoreGui = game:GetService('CoreGui')
+local DevConsoleUI = CoreGui.DevConsoleMaster.DevConsoleWindow.DevConsoleUI
 
+local function FindString(str)
+    local Found = {}
+    for i = 1, #Filters do
+        if string.find(str, Filters[i]) then
+            table.insert(Found, Filters[i])
+        end
+    end
+    return Found
+end
+
+DevConsoleUI.DescendantAdded:Connect(function(ins)
+    if ins:IsA('TextLabel') then
+        local Found = FindString(ins.Text)
+        if #Found ~= 0 then
+            ins.RichText = true
+            for i = 1, #Found do
+                local color = "#e8f31d" -- Default color (yellow)
+                if string.find(Found[i], '░██████╗██████╗░░░░░░██╗') or string.find(Found[i], '██╔════╝██╔══██╗░░░░░██║') or string.find(Found[i], '╚█████╗░██████╔╝░░░░░██║') or string.find(Found[i], '░╚═══██╗██╔═══╝░██╗░░██║') or string.find(Found[i], '██████╔╝██║░░░░░╚█████╔╝') or string.find(Found[i], '╚═════╝░╚═╝░░░░░░╚════╝░') then
+                    color = "#ff0000" -- Red for ASCII art
+                elseif string.find(Found[i], 'Loading modules') or string.find(Found[i], 'Fetching drawing API') or string.find(Found[i], 'Loading scripts') or string.find(Found[i], 'Getting cursor lock API') or string.find(Found[i], 'Loading functions') then
+                    color = "#ffa500" -- Orange for loading messages
+                elseif string.find(Found[i], 'Starting') or string.find(Found[i], 'Script loaded') or string.find(Found[i], '1.3.9') or string.find(Found[i], 'Updating') or string.find(Found[i], 'Finished') or string.find(Found[i], 'New update avaiable!') or string.find(Found[i], 'Getting Latest version') or string.find(Found[i], 'New update avaiable!') or string.find(Found[i], 'Setting Functions') or string.find(Found[i], 'Setting Variables') or string.find(Found[i], 'Setting UI elements') then
+                    color = "#00ff00" -- Green for starting messages
+                end
+                ins.Text = string.gsub(ins.Text, Found[i], '<font color="'..color..'">'..Found[i]..'</font>')
+            end
+        end
+    end
+end)
+print('░██████╗██████╗░░░░░░██╗  ░█████╗░██╗███╗░░░███╗')
+print('██╔════╝██╔══██╗░░░░░██║  ██╔══██╗██║████╗░████║')
+print('╚█████╗░██████╔╝░░░░░██║  ███████║██║██╔████╔██║')
+print('░╚═══██╗██╔═══╝░██╗░░██║  ██╔══██║██║██║╚██╔╝██║')
+print('██████╔╝██║░░░░░╚█████╔╝  ██║░░██║██║██║░╚═╝░██║')
+print('╚═════╝░╚═╝░░░░░░╚════╝░  ╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝')
+print('​version​ 0.2.2')
+warn('[-] Loading modules..')
+wait(1)
+warn('[-] Loading scripts..')
+wait(1)
+warn('[-] Loading functions..')
+wait(1)
+warn('[-] Up to date..')
+wait(1)
+warn('[-] Started')
+wait(1)
+game:GetService("StarterGui"):SetCore("DevConsoleVisible", false)
 -- SPJ Reach
--- Version 0.2.1
+-- Version 0.2.2
 -- Variables
 local UserInputService = game:GetService("UserInputService")
 local StarterGui = game:GetService("StarterGui")
@@ -166,6 +249,10 @@ local function onQuantumInputBegan(input, gameProcessedEvent)
         end
     end
 end
+local AutoGKEnabled = false
+local detectionDistance = 10 -- Maximum distance to react to the ball
+local smallStep = 2 -- Small step to take before a jump or defense
+local minimumDistanceToBall = 1 -- Minimum distance before reacting
 -- TABS
 local DrRayLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/DrRay-UI-Library/main/DrRay.lua"))()
 local window = DrRayLibrary:Load("SPJ Reach", "Default")
@@ -173,7 +260,169 @@ local Tab = DrRayLibrary.newTab("Configs", "ImageIdHere")
 local EspTab = DrRayLibrary.newTab("Esp", "ImageIdHere")
 local Fun = DrRayLibrary.newTab("Fun", "ImageIdHere")
 local Auto = DrRayLibrary.newTab("Auto-Farm", "ImageIdHere")
+local AutoGK = DrRayLibrary.newTab("Auto-GK", "ImageIdHere")
 -- Toggles
+AutoGK.newToggle("Auto-GK", "Enables Auto-GK", true, function(toggleState)
+    if toggleState then
+        AutoGKEnabled = true
+    else
+        AutoGKEnabled = false
+    end
+end)
+Tab.newSlider("Detection Distance", "", 20, false, function(Value)
+    detectionDistance = Value
+end)
+Tab.newSlider("smallStep", "", 20, false, function(Value)
+    smallStep = Value
+end)
+Tab.newSlider("Minium Distance to ball", "", 5, false, function(Value)
+    minimumDistanceToBall = Value
+end)
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+local rootPart = char:WaitForChild("HumanoidRootPart")
+local RunService = game:GetService("RunService")
+
+-- Equip GK tool automatically
+local function equipGKTool()
+    local backpack = player.Backpack
+    local gkTool = backpack:FindFirstChild("GKTool") -- Change to the exact name of the GK tool
+    if gkTool then
+        humanoid:EquipTool(gkTool)
+    end
+end
+
+-- Press key instantly
+local function pressKey(key)
+    VirtualInputManager:SendKeyEvent(true, key, false, game)
+    wait(0.01) -- Short delay for immediate press and release
+    VirtualInputManager:SendKeyEvent(false, key, false, game)
+end
+
+-- Move the player slightly before a jump using humanoid movement (natural walking)
+local function moveToSide(side)
+    if side == "right" then
+        humanoid:Move(Vector3.new(smallStep, 0, 0), true) -- Small step right
+        wait(0.1) -- Short delay to allow movement
+    elseif side == "left" then
+        humanoid:Move(Vector3.new(-smallStep, 0, 0), true) -- Small step left
+        wait(0.1)
+    end
+end
+
+-- Function to find the closest ball
+local function getClosestBall()
+    local balls = workspace.Balls:GetChildren()
+    local closestBall = nil
+    local closestDistance = math.huge
+    
+    for _, ball in ipairs(balls) do
+        if ball:IsA("Part") then
+            local distance = (ball.Position - rootPart.Position).Magnitude
+            if distance < closestDistance then
+                closestBall = ball
+                closestDistance = distance
+            end
+        end
+    end
+    
+    return closestBall, closestDistance
+end
+
+-- Function to detect ball position (side and height)
+local function detectBallPosition(ball)
+    if not ball then return nil, nil end
+    
+    local relativePos = ball.Position - rootPart.Position
+    local side, height
+    
+    -- Detect side
+    if relativePos.X > 2 then
+        side = "right"
+    elseif relativePos.X < -2 then
+        side = "left"
+    else
+        side = "middle"
+    end
+    
+    -- Detect height
+    if relativePos.Y > 6 then
+        height = "high"
+    elseif relativePos.Y < 1 then
+        height = "low"
+    else
+        height = "medium"
+    end
+    
+    return side, height
+end
+
+-- Perform the defense action based on ball position
+local function performDefense(side, height, distanceToBall)
+    -- Only react if the ball is within the detection distance and Auto-GK is enabled
+    if not AutoGKEnabled or distanceToBall > detectionDistance or distanceToBall < minimumDistanceToBall then
+        return
+    end
+    
+    if height == "high" then
+        if side == "right" then
+            moveToSide("right") -- Step right
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping) -- Jump
+            wait(0.1)
+            pressKey(Enum.KeyCode.Q) -- High right jump
+        elseif side == "left" then
+            moveToSide("left") -- Step left
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping) -- Jump
+            wait(0.1)
+            pressKey(Enum.KeyCode.E) -- High left jump
+        else
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping) -- Jump straight up
+            wait(0.1)
+            pressKey(Enum.KeyCode.X) -- High middle jump
+        end
+    elseif height == "low" then
+        if side == "right" then
+            moveToSide("right") -- Step right
+            pressKey(Enum.KeyCode.C) -- Low right defense
+        elseif side == "left" then
+            moveToSide("left") -- Step left
+            pressKey(Enum.KeyCode.Z) -- Low left defense
+        else
+            pressKey(Enum.KeyCode.V) -- Low middle defense (no side movement)
+        end
+    else
+        if side == "right" then
+            moveToSide("right") -- Step right
+            pressKey(Enum.KeyCode.Q) -- Medium right defense
+        elseif side == "left" then
+            moveToSide("left") -- Step left
+            pressKey(Enum.KeyCode.E) -- Medium left defense
+        else
+            pressKey(Enum.KeyCode.V) -- Medium middle defense
+        end
+    end
+end
+
+-- Main loop for real-time tracking and instant defense
+local function autoGK()
+    equipGKTool() -- Equip GK tool
+    
+    RunService.Heartbeat:Connect(function()
+        local closestBall, distanceToBall = getClosestBall()
+        
+        if closestBall and distanceToBall <= detectionDistance then
+            local side, height = detectBallPosition(closestBall)
+            if side and height then
+                performDefense(side, height, distanceToBall)
+            end
+        end
+    end)
+end
+
+-- Start the Auto-GK
+autoGK()
 Tab.newToggle("BallOwner", "BallOwner (make u get the ball first)", true, function(toggleState)
     if toggleState then
         ballOwnerEnabled = true
@@ -197,7 +446,7 @@ Tab.newSlider("Reach", "Set reach default = 1000 (no reach, change for get a rea
     createReachCircle()
 end)
 Tab.newSlider("Change ball curve", "Set ball curve, 20 = default ", 20, false, function(Value)
-        CurveValue.Value = Value
+    CurveValue = Value
 end)
 
 -- Auto-Farm
@@ -697,5 +946,3 @@ RunService.RenderStepped:Connect(
         end
     end
 )
-wait(3600)
-game.Players.LocalPlayer:Kick('Key reseted')
