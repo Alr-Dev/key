@@ -246,13 +246,13 @@ AutoGK.newToggle("Auto-GK", "Enables Auto-GK", true, function(toggleState)
         AutoGKEnabled = false
     end
 end)
-Tab.newSlider("Detection Distance", "", 20, false, function(Value)
+AutoGK.newSlider("Detection Distance", "", 20, false, function(Value)
     detectionDistance = Value
 end)
-Tab.newSlider("smallStep", "", 20, false, function(Value)
+AutoGK.newSlider("smallStep", "", 20, false, function(Value)
     smallStep = Value
 end)
-Tab.newSlider("Minium Distance to ball", "", 5, false, function(Value)
+AutoGK.newSlider("Minium Distance to ball", "", 5, false, function(Value)
     minimumDistanceToBall = Value
 end)
 local VirtualInputManager = game:GetService("VirtualInputManager")
@@ -423,7 +423,7 @@ Tab.newSlider("Reach", "Set reach default = 1000 (no reach, change for get a rea
     createReachCircle()
 end)
 Tab.newSlider("Change ball curve", "Set ball curve, 20 = default ", 20, false, function(Value)
-    CurveValue = Value
+    CurveValue.Value = Value
 end)
 
 -- Auto-Farm
