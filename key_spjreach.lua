@@ -1,4 +1,4 @@
-local validKeys = { "SPJ-REACH-0xSRLJYI-LUUUMF-3KBHVX" } -- Linktverse key, dont change!
+local validKeys = { "SPJ-REACH-0xYCWP6U-TJ5KOZ-TT30BU" }
 local PaidKeys = {
     'SPJ-REACH-5CEHIDCJ-OBAEAI-UYS0O2',
 'SPJ-REACH-ZGKHHOF5-FTEZRP-BIP630',
