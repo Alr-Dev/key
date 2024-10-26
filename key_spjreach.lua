@@ -1,5 +1,5 @@
+local validKeys = { "SPJ-REACH-0x186SMI-88M3YJ-AV8Z34" }
 
-local validKeys = { "SPJ-REACH-0xNF0AN5-NZU7RL-HQUZQD" }
 local PaidKeys = {
 	'SPJ-REACH-VU8VRZQH-LGOKMQ-CW5800'
 }
