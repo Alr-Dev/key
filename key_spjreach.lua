@@ -1,7 +1,7 @@
 local validKeys = { "SPJ-REACH-0x186SMI-88M3YJ-AV8Z34" }
 
 local PaidKeys = {
-	'SPJ-REACH-VU8VRZQH-LGOKMQ-CW5800'
+	
 }
 
 print('========\\//========')
