@@ -4,14 +4,14 @@ print('========\\//========')
 print('==================')
 print('Loading Key Verification...')
 
--- SPJ Services
+
 local UserInputService = game:GetService("UserInputService")
-local StarterGui = game:GetService("StarterGui") -- Adicionado StarterGui
-local OrionLib1 = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() -- Renamed to OrionLib1
+local StarterGui = game:GetService("StarterGui") 
+local OrionLib1 = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))() 
 
--- Local API Keys (Replace with your actual keys)
 
--- Function to verify API Key
+
+
 local function verifyApiKey(apiKey, callback)
     for _, key in pairs(validKeys) do
         if key == apiKey then
@@ -22,16 +22,16 @@ local function verifyApiKey(apiKey, callback)
     callback(false)
 end
 
--- Create Key Input Window
+
 local function createKeyWindow()
     local Window13 = OrionLib1:MakeWindow({
         Name = "API KEY",
         HidePremium = false,
         SaveConfig = false,
         ConfigFolder = "OrionTest",
-        IntroEnabled = true,  -- Habilita a introdução
-        IntroText = "Welcome to API Key Verification!",  -- Texto da introdução
-        IntroIcon = "rbxassetid://4483345998"  -- Ícone da introdução (substitua com o ID correto se necessário)
+        IntroEnabled = true,  
+        IntroText = "Welcome to API Key Verification!",  
+        IntroIcon = "rbxassetid://4483345998"  
     })
 
     local Tab = Window13:MakeTab({
@@ -67,4 +67,4 @@ local function createKeyWindow()
     })
 end
 
-createKeyWindow() -- Show key window on start
+createKeyWindow()
